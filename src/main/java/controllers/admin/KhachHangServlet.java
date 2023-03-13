@@ -24,7 +24,25 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
-        this.create(request, response);
+        String uri = request.getRequestURI();
+        if (uri.contains("create")) {
+            this.create(request, response);
+        } else if (uri.contains("edit")) {
+//            this.edit(request, response);
+        } else if (uri.contains("delete")) {
+//            this.delete(request, response);
+        } else {
+            this.index(request, response);
+        }
+    }
+
+    protected void index(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        request.setAttribute("danhSachKH", list);
+        request.getRequestDispatcher("/views/khach_hang/index.jsp")
+            .forward(request, response);
     }
 
     protected void create(
@@ -44,8 +62,8 @@ public class KhachHangServlet extends HttpServlet {
     }
 
     protected void store(
-            HttpServletRequest request,
-            HttpServletResponse response
+        HttpServletRequest request,
+        HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
         String ho = request.getParameter("ho");
@@ -60,5 +78,6 @@ public class KhachHangServlet extends HttpServlet {
 
         QLKhachHang vm = new QLKhachHang(ma, ho, tenDem, ten, ngaySinh, sdt, diaChi, quocGia, thanhPho, matKhau);
         list.add(vm);
+        System.out.println(list.size());
     }
 }
