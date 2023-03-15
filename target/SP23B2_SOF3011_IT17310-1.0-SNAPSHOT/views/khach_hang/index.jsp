@@ -52,10 +52,16 @@
                     <td>HN</td>
                     <td>VN</td>
                     <td>
-                        <a href="#" class="btn btn-primary">Cập nhật</a>
+                        <a class="btn btn-primary"
+                           href="/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/edit?ma=${ kh.ma }">
+                            Cập nhật
+                        </a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger">Xóa</a>
+                        <a class="btn btn-danger"
+                           href="/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/delete?ma=${ kh.ma }">
+                            Xóa
+                        </a>
                     </td>
                 </tr>
             </c:forEach>

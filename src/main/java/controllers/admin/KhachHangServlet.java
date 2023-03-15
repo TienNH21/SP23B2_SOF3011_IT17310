@@ -37,12 +37,23 @@ public class KhachHangServlet extends HttpServlet {
         if (uri.contains("create")) {
             this.create(request, response);
         } else if (uri.contains("edit")) {
-//            this.edit(request, response);
+            this.edit(request, response);
         } else if (uri.contains("delete")) {
             this.delete(request, response);
         } else {
             this.index(request, response);
         }
+    }
+
+    protected void edit(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        String ma = request.getParameter("ma");
+        QLKhachHang vm = this.khRepo.findByMa(ma);
+        request.setAttribute("kh", vm);
+        request.getRequestDispatcher("/views/khach_hang/edit.jsp")
+                .forward(request, response);
     }
 
     protected void delete(
@@ -98,5 +109,6 @@ public class KhachHangServlet extends HttpServlet {
 
         QLKhachHang vm = new QLKhachHang(ma, ho, tenDem, ten, ngaySinh, sdt, diaChi, quocGia, thanhPho, matKhau);
         this.khRepo.insert(vm);
+        response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
     }
 }
