@@ -55,7 +55,10 @@
                         <a href="#" class="btn btn-primary">Cập nhật</a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger">Xóa</a>
+                        <a class="btn btn-danger"
+                           href="/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/delete?ma=${ kh.ma }">
+                            Xóa
+                        </a>
                     </td>
                 </tr>
             </c:forEach>
