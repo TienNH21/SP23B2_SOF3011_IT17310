@@ -8,13 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="/SP23B2_SOF3011_IT17310_war_exploded/css/bootstrap.min.css" />
-</head>
-<body>
-<div class="col-8 offset-2 mt-5 table-responsive">
+
+<div class="col-10 offset-1 mt-5 table-responsive">
     <div class="row">
         <div class="col-6">
             <a href="#" class="btn btn-success">Thêm mới</a>
@@ -70,7 +65,3 @@
     </c:if>
 
 </div>
-
-<script src="/SP23B2_SOF3011_IT17310_war_exploded/js/bootstrap.min.js"></script>
-</body>
-</html>

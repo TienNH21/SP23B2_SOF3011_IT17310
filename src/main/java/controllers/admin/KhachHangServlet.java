@@ -74,13 +74,15 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletResponse response
     ) throws ServletException, IOException {
         request.setAttribute("danhSachKH", this.khRepo.findAll());
-        request.getRequestDispatcher("/views/khach_hang/index.jsp")
+//        request.getRequestDispatcher("/views/khach_hang/index.jsp")
+        request.setAttribute("view", "/views/khach_hang/index.jsp");
+        request.getRequestDispatcher("/views/layout.jsp")
             .forward(request, response);
     }
 
     protected void create(
-            HttpServletRequest request,
-            HttpServletResponse response
+        HttpServletRequest request,
+        HttpServletResponse response
     ) throws ServletException, IOException {
         request.getRequestDispatcher("/views/khach_hang/create.jsp")
             .forward(request, response);
