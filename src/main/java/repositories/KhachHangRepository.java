@@ -42,6 +42,7 @@ public class KhachHangRepository {
 
     public ArrayList<QLKhachHang> findAll()
     {
+        // SELECT * FROM KhachHang
         return this.list;
     }
 

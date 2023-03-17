@@ -3,11 +3,13 @@ package controllers.admin;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.apache.commons.beanutils.BeanUtils;
 import repositories.KhachHangRepository;
 import view_model.QLKhachHang;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 @WebServlet({
@@ -89,10 +91,19 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
-        this.store(request, response);
+        String uri = request.getRequestURI();
+        if (uri.contains("store")) {
+            this.store(request, response);
+        } else if (uri.contains("update")) {
+            this.update(request, response);
+        } else {
+            response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
+            // 404: Not Found
+            // 405: Method Not Allowed
+        }
     }
 
-    protected void store(
+    protected void update(
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
@@ -107,8 +118,28 @@ public class KhachHangServlet extends HttpServlet {
         String thanhPho = request.getParameter("thanh_pho");
         String matKhau = request.getParameter("mat_khau");
 
+        System.out.println("ma:" + ma);
+        System.out.println("ten:" + ten);
+
         QLKhachHang vm = new QLKhachHang(ma, ho, tenDem, ten, ngaySinh, sdt, diaChi, quocGia, thanhPho, matKhau);
-        this.khRepo.insert(vm);
+        this.khRepo.update(vm);
+        response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
+    }
+
+    protected void store(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        try {
+            QLKhachHang vm = new QLKhachHang();
+            BeanUtils.populate(vm, request.getParameterMap());
+            this.khRepo.insert(vm);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
         response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
     }
 }
