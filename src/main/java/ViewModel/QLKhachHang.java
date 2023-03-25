@@ -1,4 +1,4 @@
-package view_model;
+package ViewModel;
 
 public class QLKhachHang {
     private String ma;

@@ -4,13 +4,11 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.apache.commons.beanutils.BeanUtils;
-import repositories.KhachHangRepository;
-import view_model.QLKhachHang;
+import Repositories.KhachHangRepository;
+import ViewModel.QLKhachHang;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 @WebServlet({
     "/khach-hang/index",    // GET

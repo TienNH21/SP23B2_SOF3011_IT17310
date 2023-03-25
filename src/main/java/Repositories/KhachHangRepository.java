@@ -1,6 +1,6 @@
-package repositories;
+package Repositories;
 
-import view_model.QLKhachHang;
+import ViewModel.QLKhachHang;
 
 import java.util.ArrayList;
 
