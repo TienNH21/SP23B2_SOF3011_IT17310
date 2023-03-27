@@ -1,11 +1,12 @@
 package controllers.admin;
 
+import domain_models.KhachHang;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.apache.commons.beanutils.BeanUtils;
-import Repositories.KhachHangRepository;
-import ViewModel.QLKhachHang;
+import repositories.KhachHangRepository;
+import view_model.QLKhachHang;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -24,8 +25,6 @@ public class KhachHangServlet extends HttpServlet {
     public KhachHangServlet()
     {
         this.khRepo = new KhachHangRepository();
-        this.khRepo.insert(new QLKhachHang("PH1", "Ng", "Van", "A", "HN", "0123123123", "1231231", "HN", "VN", "12-12-2022"));
-        this.khRepo.insert(new QLKhachHang("PH2", "Tr", "Thi", "B", "HN", "0123123123", "1231231", "HN", "VN", "12-12-2022"));
     }
 
     @Override
@@ -50,8 +49,8 @@ public class KhachHangServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLKhachHang vm = this.khRepo.findByMa(ma);
-        request.setAttribute("kh", vm);
+        KhachHang domainModelKH = this.khRepo.findByMa(ma);
+        request.setAttribute("kh", domainModelKH);
         request.getRequestDispatcher("/views/khach_hang/edit.jsp")
                 .forward(request, response);
     }
@@ -61,8 +60,8 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLKhachHang vm = this.khRepo.findByMa(ma);
-        this.khRepo.delete(vm);
+        KhachHang domainModelKH = this.khRepo.findByMa(ma);
+        this.khRepo.delete(domainModelKH);
 
         response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
     }
@@ -107,22 +106,21 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        String ho = request.getParameter("ho");
-        String tenDem = request.getParameter("ten_dem");
-        String ten = request.getParameter("ten");
-        String ngaySinh = request.getParameter("ngay_sinh");
-        String sdt = request.getParameter("sdt");
-        String diaChi = request.getParameter("dia_chi");
-        String quocGia = request.getParameter("quoc_gia");
-        String thanhPho = request.getParameter("thanh_pho");
-        String matKhau = request.getParameter("mat_khau");
+        try {
+            String ma = request.getParameter("ma");
+            /*
+             * domainModelKH: Dữ liệu đang có trong DB
+             * request.getParameterMap(): Dữ liệu người dùng cập nhật
+             */
+            KhachHang domainModelKH = this.khRepo.findByMa(ma);
+            BeanUtils.populate(domainModelKH, request.getParameterMap());
+            this.khRepo.update(domainModelKH);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
-        System.out.println("ma:" + ma);
-        System.out.println("ten:" + ten);
-
-        QLKhachHang vm = new QLKhachHang(ma, ho, tenDem, ten, ngaySinh, sdt, diaChi, quocGia, thanhPho, matKhau);
-        this.khRepo.update(vm);
         response.sendRedirect("/SP23B2_SOF3011_IT17310_war_exploded/khach-hang/index");
     }
 
@@ -131,9 +129,10 @@ public class KhachHangServlet extends HttpServlet {
         HttpServletResponse response
     ) throws ServletException, IOException {
         try {
-            QLKhachHang vm = new QLKhachHang();
-            BeanUtils.populate(vm, request.getParameterMap());
-            this.khRepo.insert(vm);
+            KhachHang domainModelKH = new KhachHang();
+            BeanUtils.populate(domainModelKH, request.getParameterMap());
+            System.out.println(domainModelKH.getMa());
+            this.khRepo.insert(domainModelKH);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

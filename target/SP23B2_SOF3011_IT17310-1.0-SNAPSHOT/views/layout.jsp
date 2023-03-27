@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div class="bg-dark">Footer</div>
+<div class="bg-dark text-white">Footer</div>
 
 <script src="/SP23B2_SOF3011_IT17310_war_exploded/js/bootstrap.min.js"></script>
 
