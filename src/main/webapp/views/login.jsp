@@ -5,7 +5,11 @@
   Time: 14:47
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="true" %>
+
+<c:if test="${ not empty errorMessage }">
+    <div class="alert alert-danger">${ errorMessage }</div>
+</c:if>
 
 <form action="/SP23B2_SOF3011_IT17310_war_exploded/login" method="post">
     <div class="mt-3">
